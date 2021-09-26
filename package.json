@@ -9,6 +9,11 @@
     "up-latest": "npm-check --update",
     "prepare": "husky install"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
   "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx,css,scss,md,json}": [
       "prettier --write"

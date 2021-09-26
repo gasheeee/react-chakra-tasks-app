@@ -10,5 +10,5 @@ ReactDOM.render(
       <App />
     </ChakraProvider>
   </StrictMode>,
-  document.querySelector('#root'),
+  document.querySelector('#root')
 );
