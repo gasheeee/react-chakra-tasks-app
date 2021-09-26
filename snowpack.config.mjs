@@ -13,7 +13,9 @@ export default {
     routes: "./src/routes"
   },
   plugins: [
-    '@snowpack/plugin-typescript'
+    '@snowpack/plugin-react-refresh',
+    '@snowpack/plugin-typescript',
+    '@snowpack/plugin-webpack'
   ],
   routes: [
     /* Enable an SPA Fallback in development: */
