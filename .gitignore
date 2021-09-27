@@ -1,4 +1,7 @@
+.npmrc
 .snowpack
 build
 node_modules
+
+# editor
 .idea
