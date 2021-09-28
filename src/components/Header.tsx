@@ -14,11 +14,7 @@ export const Header: FC = () => {
           padding={6}
         >
           <Flex align="center">
-            <Heading
-              as="h1"
-              size="lg"
-              letterSpacing={'tighter'}
-            >
+            <Heading as="h1" size="lg" letterSpacing={'tighter'}>
               Google Tasks App
             </Heading>
           </Flex>
