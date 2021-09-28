@@ -20,10 +20,12 @@
   },
   "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx,css,scss,md,json}": [
-      "prettier --write"
+      "prettier --write",
+      "prettier --check"
     ]
   },
   "dependencies": {
+    "@chakra-ui/icons": "^1.0.15",
     "@chakra-ui/react": "^1.6.8",
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
