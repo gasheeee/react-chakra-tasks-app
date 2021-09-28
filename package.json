@@ -4,8 +4,10 @@
   },
   "scripts": {
     "clean": "rm -rf build",
-    "start": "run-s clean snowpack dev",
-    "build": "run-s clean snowpack build",
+    "start": "run-s clean start:snowpack",
+    "start:snowpack": "snowpack dev",
+    "build": "run-s clean build:snowpack",
+    "build:snowpack": "snowpack build",
     "test": "echo \"This template does not include a test runner by default.\" && exit 1",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
     "lint": "prettier --check \"src/**/*.{js,jsx,ts,tsx}\"",
