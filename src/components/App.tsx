@@ -1,12 +1,9 @@
 import React, { FC } from 'react';
-import Header from "./header";
 
 const App: FC = () => {
   return (
     <div className="App">
-      <header className="header">
-        <Header></Header>
-      </header>
+      <header className="header">aaaa</header>
     </div>
   );
 };
