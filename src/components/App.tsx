@@ -1,9 +1,11 @@
 import React, { FC } from 'react';
+import { Box } from '@chakra-ui/react';
+import { Header } from './Header';
 
 export const App: FC = () => {
   return (
-    <div className="App">
-      <header className="header">aaaa</header>
-    </div>
+    <Box>
+      <Header></Header>
+    </Box>
   );
 };
