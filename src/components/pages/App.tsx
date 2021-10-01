@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { Box } from '@chakra-ui/react';
-import { Header } from './Header';
+import { Header } from '../molecules/Header';
 
 export const App: FC = () => {
   return (
