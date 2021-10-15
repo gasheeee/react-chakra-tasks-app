@@ -5,8 +5,5 @@
 build
 node_modules
 
-# api key
-src/env/client.ts
-
 # editor
 .idea
