@@ -7,9 +7,7 @@ type Props = {
 };
 
 export const Header: FC<Props> = (props) => {
-  useEffect(() => {
-    console.log(props.isSignedIn);
-  }, [props.isSignedIn]);
+  useEffect(() => {}, [props.isSignedIn]);
   return (
     <>
       <header>
