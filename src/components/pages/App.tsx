@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
-import {Box, Button} from '@chakra-ui/react';
+import { Box, Button } from '@chakra-ui/react';
 import { Header } from '../molecules/Header';
 
 export const App: FC = () => {
@@ -17,11 +17,11 @@ export const App: FC = () => {
         gapi.auth2.getAuthInstance().isSignedIn.listen(updateSignedInStatus);
         updateSignedInStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   };
-  
+
   const updateSignedInStatus = (isSignedIn: Boolean) => {
     setIsSignedIn(isSignedIn);
   };
@@ -35,10 +35,7 @@ export const App: FC = () => {
 
   return (
     <Box>
-      <Header
-        isSignedIn={isSignedIn}
-        handleSignedIn={handleLogin}
-      ></Header>
+      <Header isSignedIn={isSignedIn} handleSignedIn={handleLogin}></Header>
     </Box>
   );
 };
