@@ -26,7 +26,7 @@ export const App: FC = () => {
     setIsSignedIn(isSignedIn);
   };
 
-  const handleLogin = () => {
+  const handleSignedIn = () => {
     gapi.load('client:auth2', initClient);
   };
   useEffect(() => {
@@ -35,7 +35,7 @@ export const App: FC = () => {
 
   return (
     <Box>
-      <Header isSignedIn={isSignedIn} handleSignedIn={handleLogin}></Header>
+      <Header isSignedIn={isSignedIn} handleSignedIn={handleSignedIn}></Header>
     </Box>
   );
 };
