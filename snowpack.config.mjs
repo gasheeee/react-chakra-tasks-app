@@ -1,5 +1,13 @@
 /** @type {import('snowpack').SnowpackUserConfig } */
+import rollupPluginNodePolyfills from 'rollup-plugin-node-polyfills';
+
 export default {
+  env: {
+    DISCOVERY_DOCS: [
+      'https://www.googleapis.com/discovery/v1/apis/tasks/v1/rest',
+    ],
+    SCOPES: 'https://www.googleapis.com/auth/tasks',
+  },
   mount: {
     public: {
       url: '/',
@@ -13,6 +21,7 @@ export default {
     routes: './src/routes'
   },
   plugins: [
+    '@snowpack/plugin-dotenv',
     '@snowpack/plugin-react-refresh',
     '@snowpack/plugin-typescript',
     ['@snowpack/plugin-webpack', {}]
@@ -30,12 +39,19 @@ export default {
     // 'bundle': true,
   },
   packageOptions: {
-    /* ... */
+    packageOptions: {
+      polyfillNode: true,
+      rollup: {
+        plugins: [rollupPluginNodePolyfills({
+          crypto: true
+        })],
+      },
+    },
   },
   devOptions: {
     /* ... */
   },
   buildOptions: {
-    /* ... */
+    htmlFragments: true
   },
 };

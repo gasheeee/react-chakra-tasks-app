@@ -1,7 +1,13 @@
-import React, { FC } from 'react';
+import React, { FC, MouseEventHandler, useEffect } from 'react';
 import { Box, Button, Flex, Heading } from '@chakra-ui/react';
 
-export const Header: FC = () => {
+type Props = {
+  isSignedIn: Boolean;
+  onAuthorizationClick: MouseEventHandler<HTMLButtonElement>;
+};
+
+export const Header: FC<Props> = (props) => {
+  useEffect(() => {}, [props.isSignedIn]);
   return (
     <>
       <header>
@@ -21,10 +27,11 @@ export const Header: FC = () => {
           <Box d="block">
             <Button
               bg="teal.500"
+              onClick={props.onAuthorizationClick}
               variant="outline"
               _hover={{ bg: 'teal.700', borderColor: 'teal.700' }}
             >
-              sign in
+              {props.isSignedIn ? 'sign out' : 'sign in'}
             </Button>
           </Box>
         </Flex>

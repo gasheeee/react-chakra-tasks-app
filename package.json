@@ -5,9 +5,9 @@
   "scripts": {
     "clean": "rm -rf build",
     "start": "run-s clean start:snowpack",
-    "start:snowpack": "snowpack dev",
+    "start:snowpack": "snowpack dev --polyfill-node",
     "build": "run-s clean build:snowpack",
-    "build:snowpack": "snowpack build",
+    "build:snowpack": "snowpack build --polyfill-node",
     "test": "echo \"This template does not include a test runner by default.\" && exit 1",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
     "lint": "prettier --check \"src/**/*.{js,jsx,ts,tsx}\"",
@@ -20,6 +20,7 @@
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
     "framer-motion": "^4.1.17",
+    "googleapis": "^88.2.0",
     "npm-run-all": "^4.1.5",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -27,9 +28,13 @@
     "react-router-dom": "^5.3.0"
   },
   "devDependencies": {
+    "@snowpack/plugin-dotenv": "^2.2.0",
     "@snowpack/plugin-react-refresh": "^2.5.0",
     "@snowpack/plugin-typescript": "^1.2.1",
     "@snowpack/plugin-webpack": "^3.0.0",
+    "@types/gapi": "0.0.41",
+    "@types/gapi.auth2": "0.0.55",
+    "@types/gapi.client.tasks": "^1.0.4",
     "@types/react": "^17.0.24",
     "@types/react-dom": "^17.0.9",
     "@types/react-router-dom": "^5.3.0",
@@ -38,6 +43,7 @@
     "lint-staged": "^11.1.2",
     "npm-check": "^5.9.2",
     "prettier": "^2.4.1",
+    "rollup-plugin-node-polyfills": "^0.2.1",
     "snowpack": "^3.3.7",
     "typescript": "^4.4.3"
   }
