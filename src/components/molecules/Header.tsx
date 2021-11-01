@@ -3,7 +3,7 @@ import { Box, Button, Flex, Heading } from '@chakra-ui/react';
 
 type Props = {
   isSignedIn: Boolean;
-  handleSignedIn: MouseEventHandler<HTMLButtonElement>;
+  onAuthorizationClick: MouseEventHandler<HTMLButtonElement>;
 };
 
 export const Header: FC<Props> = (props) => {
@@ -27,7 +27,7 @@ export const Header: FC<Props> = (props) => {
           <Box d="block">
             <Button
               bg="teal.500"
-              onClick={props.handleSignedIn}
+              onClick={props.onAuthorizationClick}
               variant="outline"
               _hover={{ bg: 'teal.700', borderColor: 'teal.700' }}
             >
