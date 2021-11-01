@@ -4,7 +4,8 @@ import { Header } from '../molecules/Header';
 
 export const App: FC = () => {
   //生成したgapi.auth2インスタンス
-  const [googleAuthInstance, setGoogleAuthInstance] = useState<gapi.auth2.GoogleAuth>();
+  const [googleAuthInstance, setGoogleAuthInstance] =
+    useState<gapi.auth2.GoogleAuth>();
   //サインイン状態かどうか
   const [isSignedIn, setIsSignedIn] = useState<Boolean>(false);
 
@@ -51,7 +52,10 @@ export const App: FC = () => {
 
   return (
     <Box>
-      <Header isSignedIn={isSignedIn} onAuthorizationClick={isSignedIn ? handleSignOut : handleSignedIn}></Header>
+      <Header
+        isSignedIn={isSignedIn}
+        onAuthorizationClick={isSignedIn ? handleSignOut : handleSignedIn}
+      ></Header>
     </Box>
   );
 };
