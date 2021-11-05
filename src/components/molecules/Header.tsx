@@ -2,7 +2,7 @@ import React, { FC, MouseEventHandler, useEffect } from 'react';
 import { Box, Button, Flex, Heading } from '@chakra-ui/react';
 
 type Props = {
-  isSignedIn: Boolean;
+  isSignedIn?: boolean;
   onAuthorizationClick: MouseEventHandler<HTMLButtonElement>;
 };
 
