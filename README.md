@@ -1,7 +1,7 @@
-# Todo Top
+# Todo App
 react × typescript × chakra ui × snowpack
 
-# Features
+## Features
 タスク管理
 
 ## Available Scripts
