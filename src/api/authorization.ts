@@ -33,3 +33,27 @@ export const authorization = async (): Promise<resType> => {
   });
   return res;
 };
+
+export const signin = async (): Promise<resType> => {
+  const res: resType = await new Promise(async (resolve, reject) => {
+    await client.googleAuthInstance?.signIn()
+      .then(() => {
+        client.isSignedIn = client.googleAuthInstance?.isSignedIn.get();
+        resolve({ isSignedIn: client.isSignedIn });
+      })
+      .catch(error => {
+        reject(error);
+        throw new Error(error);
+      });
+  });
+  return res;
+};
+
+export const signout = async (): Promise<resType> => {
+  const res: resType = await new Promise(async (resolve) => {
+    await client.googleAuthInstance?.signOut()
+    client.isSignedIn = client.googleAuthInstance?.isSignedIn.get();
+    resolve({ isSignedIn: client.isSignedIn });
+  });
+  return res;
+};

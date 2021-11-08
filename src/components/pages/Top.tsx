@@ -3,34 +3,38 @@ import { Box } from '@chakra-ui/react';
 import { Header } from '../molecules/Header';
 import type { SerializedError } from '@reduxjs/toolkit';
 
-interface Props {
+type Props = {
   googleAuthInstance?: gapi.auth2.GoogleAuth;
   isSignedIn?: boolean;
   initialClient: () => void;
+  handleSignedIn: () => void;
+  handleSignOut: () => void;
   error?: SerializedError;
 }
 
 export const Top: FC<Props> = (props: Props) => {
-  const { googleAuthInstance, isSignedIn, initialClient, error } = props;
+  const { googleAuthInstance, isSignedIn, initialClient, handleSignedIn, handleSignOut,  error } = props;
 
-  const handleSignedIn = () => {
-    googleAuthInstance?.signIn();
+  const signedIn = () => {
+    handleSignedIn();
   };
 
-  const handleSignOut = () => {
-    googleAuthInstance?.signOut();
+  const signOut = () => {
+    handleSignOut();
   };
 
   useEffect(() => {
     if (!!googleAuthInstance) return;
     initialClient();
-  }, [googleAuthInstance, isSignedIn]);
+  }, [googleAuthInstance]);
+
+  useEffect(() => {}, [isSignedIn]);
 
   return (
     <Box>
       <Header
         isSignedIn={isSignedIn}
-        onAuthorizationClick={isSignedIn ? handleSignOut : handleSignedIn}
+        onAuthorizationClick={isSignedIn ? signOut : signedIn}
       ></Header>
     </Box>
   );

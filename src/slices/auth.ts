@@ -4,7 +4,7 @@ import {
   SerializedError,
 } from '@reduxjs/toolkit';
 
-import { authorization } from '../api/authorization';
+import {authorization, signin, signout} from '../api/authorization';
 
 export interface AuthState {
   isSignedIn?: boolean;
@@ -33,6 +33,24 @@ export const authorize = createAsyncThunk<authorizeType>(
   }
 );
 
+// Google Auth2 SignedIn
+export const signIn = createAsyncThunk<authorizeType>(
+  'signIn',
+  async (): Promise<authorizeType> => {
+    const res = await signin();
+    return res;
+  }
+);
+
+// Google Auth2 SignOut
+export const signOut = createAsyncThunk<authorizeType>(
+  'signOut',
+  async (): Promise<authorizeType> => {
+    const res = await signout();
+    return res;
+  }
+);
+
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
@@ -45,6 +63,18 @@ export const authSlice = createSlice({
       state.isSignedIn = action.payload.isSignedIn;
     });
     builder.addCase(authorize.rejected, (state, action) => {
+      state.error = action.error;
+    });
+    builder.addCase(signIn.fulfilled, (state, action) => {
+      state.isSignedIn = action.payload.isSignedIn;
+    });
+    builder.addCase(signIn.rejected, (state, action) => {
+      state.error = action.error;
+    });
+    builder.addCase(signOut.fulfilled, (state, action) => {
+      state.isSignedIn = action.payload.isSignedIn;
+    });
+    builder.addCase(signOut.rejected, (state, action) => {
       state.error = action.error;
     });
   },
