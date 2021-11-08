@@ -4,7 +4,7 @@ import {
   SerializedError,
 } from '@reduxjs/toolkit';
 
-import {authorization, signin, signout} from '../api/authorization';
+import { authorization, signin, signout } from '../api/authorization';
 
 export interface AuthState {
   isSignedIn?: boolean;

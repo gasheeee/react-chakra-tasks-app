@@ -2,7 +2,7 @@
 import React, { FC, useCallback } from 'react';
 import { Top } from 'components/pages/Top';
 import { useDispatch } from 'react-redux';
-import {authorize, signIn, signOut} from '../slices/auth';
+import { authorize, signIn, signOut } from '../slices/auth';
 import { useSelector } from '../store';
 import { errorSelector, isSignedInSelector } from '../selectors/auth';
 

@@ -10,10 +10,17 @@ type Props = {
   handleSignedIn: () => void;
   handleSignOut: () => void;
   error?: SerializedError;
-}
+};
 
 export const Top: FC<Props> = (props: Props) => {
-  const { googleAuthInstance, isSignedIn, initialClient, handleSignedIn, handleSignOut,  error } = props;
+  const {
+    googleAuthInstance,
+    isSignedIn,
+    initialClient,
+    handleSignedIn,
+    handleSignOut,
+    error,
+  } = props;
 
   const signedIn = () => {
     handleSignedIn();
