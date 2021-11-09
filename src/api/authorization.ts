@@ -7,7 +7,7 @@ type resType = { isSignedIn: boolean };
 
 export const client: ClientType = {
   googleAuthInstance: undefined,
-  isSignedIn: false
+  isSignedIn: false,
 };
 
 export const authorization = async (): Promise<resType> => {
@@ -49,7 +49,10 @@ export const signin = async (): Promise<resType> => {
       ?.signIn()
       .then(() => {
         try {
-          client.isSignedIn = client.googleAuthInstance?.isSignedIn.get() === undefined ? false: client.googleAuthInstance?.isSignedIn.get();
+          client.isSignedIn =
+            client.googleAuthInstance?.isSignedIn.get() === undefined
+              ? false
+              : client.googleAuthInstance?.isSignedIn.get();
           resolve({ isSignedIn: client.isSignedIn });
         } catch (error) {
           reject(error);
@@ -66,7 +69,10 @@ export const signin = async (): Promise<resType> => {
 export const signout = async (): Promise<resType> => {
   const res: resType = await new Promise(async (resolve) => {
     await client.googleAuthInstance?.signOut();
-    client.isSignedIn = client.googleAuthInstance?.isSignedIn.get() === undefined ? false: client.googleAuthInstance?.isSignedIn.get();
+    client.isSignedIn =
+      client.googleAuthInstance?.isSignedIn.get() === undefined
+        ? false
+        : client.googleAuthInstance?.isSignedIn.get();
     resolve({ isSignedIn: client.isSignedIn });
   });
   return res;
