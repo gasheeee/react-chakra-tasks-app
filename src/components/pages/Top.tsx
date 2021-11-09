@@ -35,8 +35,6 @@ export const Top: FC<Props> = (props: Props) => {
     initialClient();
   }, [googleAuthInstance]);
 
-  useEffect(() => {}, [isSignedIn]);
-
   return (
     <Box>
       <Header

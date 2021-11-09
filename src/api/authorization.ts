@@ -18,12 +18,18 @@ export const authorization = async (): Promise<resType> => {
           scope: import.meta.env.SCOPES,
         })
         .then(() => {
-          client.googleAuthInstance = gapi.auth2.getAuthInstance();
-          client.googleAuthInstance.isSignedIn.listen((isSignedIn: boolean) => {
-            client.isSignedIn = isSignedIn;
-          });
-          client.isSignedIn = client.googleAuthInstance.isSignedIn.get();
-          resolve({ isSignedIn: client.isSignedIn });
+          try {
+            client.googleAuthInstance = gapi.auth2.getAuthInstance();
+            client.googleAuthInstance.isSignedIn.listen(
+              (isSignedIn: boolean) => {
+                client.isSignedIn = isSignedIn;
+              }
+            );
+            client.isSignedIn = client.googleAuthInstance.isSignedIn.get();
+            resolve({ isSignedIn: client.isSignedIn });
+          } catch (error) {
+            reject(error);
+          }
         })
         .catch((error) => {
           reject(error);
@@ -39,8 +45,12 @@ export const signin = async (): Promise<resType> => {
     await client.googleAuthInstance
       ?.signIn()
       .then(() => {
-        client.isSignedIn = client.googleAuthInstance?.isSignedIn.get();
-        resolve({ isSignedIn: client.isSignedIn });
+        try {
+          client.isSignedIn = client.googleAuthInstance?.isSignedIn.get();
+          resolve({ isSignedIn: client.isSignedIn });
+        } catch (error) {
+          reject(error);
+        }
       })
       .catch((error) => {
         reject(error);
