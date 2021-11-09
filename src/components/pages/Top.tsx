@@ -1,12 +1,5 @@
-import React, {FC, useEffect} from 'react';
-import {
-  Box,
-  Tab,
-  TabList,
-  TabPanel,
-  TabPanels,
-  Tabs
-} from '@chakra-ui/react';
+import React, { FC, useEffect } from 'react';
+import { Box, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
 import { Header } from '../molecules/Header';
 
 type Props = {
@@ -47,31 +40,32 @@ export const Top: FC<Props> = (props: Props) => {
         onAuthorizationClick={isSignedIn ? handleSignOut : handleSignedIn}
       ></Header>
       <Box pt={16} px={16}>
-        {!!taskList
-          ?(
-            <Tabs variant="enclosed">
-              <TabList>
-                {!!taskList && taskList.map((item, idx) => {
+        {!!taskList ? (
+          <Tabs variant="enclosed">
+            <TabList>
+              {!!taskList &&
+                taskList.map((item, idx) => {
                   return (
                     <React.Fragment key={idx}>
                       <Tab>{item.title}</Tab>
                     </React.Fragment>
-                  )
+                  );
                 })}
-              </TabList>
-              <TabPanels>
-                {!!taskList && taskList.map((item, idx) => {
+            </TabList>
+            <TabPanels>
+              {!!taskList &&
+                taskList.map((item, idx) => {
                   return (
                     <TabPanel key={idx}>
                       <p>{item.title}</p>
                     </TabPanel>
-                  )
+                  );
                 })}
-              </TabPanels>
-            </Tabs>
-          )
-          :(<></>)
-        }
+            </TabPanels>
+          </Tabs>
+        ) : (
+          <></>
+        )}
       </Box>
     </Box>
   );
