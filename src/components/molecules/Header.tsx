@@ -1,4 +1,4 @@
-import React, { FC, MouseEventHandler, useEffect } from 'react';
+import React, { FC, MouseEventHandler } from 'react';
 import { Box, Button, Flex, Heading } from '@chakra-ui/react';
 
 type Props = {
@@ -7,7 +7,6 @@ type Props = {
 };
 
 export const Header: FC<Props> = (props) => {
-  useEffect(() => {}, [props.isSignedIn]);
   return (
     <header>
       <Flex
