@@ -1,7 +1,6 @@
 import React, { FC, useEffect } from 'react';
 import { Box } from '@chakra-ui/react';
 import { Header } from '../molecules/Header';
-import type { SerializedError } from '@reduxjs/toolkit';
 
 type Props = {
   googleAuthInstance?: gapi.auth2.GoogleAuth;
@@ -9,7 +8,6 @@ type Props = {
   initialClient: () => void;
   handleSignedIn: () => void;
   handleSignOut: () => void;
-  error?: SerializedError;
 };
 
 export const Top: FC<Props> = (props: Props) => {
@@ -19,16 +17,7 @@ export const Top: FC<Props> = (props: Props) => {
     initialClient,
     handleSignedIn,
     handleSignOut,
-    error,
   } = props;
-
-  const signedIn = () => {
-    handleSignedIn();
-  };
-
-  const signOut = () => {
-    handleSignOut();
-  };
 
   useEffect(() => {
     if (!!googleAuthInstance) return;
@@ -39,7 +28,7 @@ export const Top: FC<Props> = (props: Props) => {
     <Box>
       <Header
         isSignedIn={isSignedIn}
-        onAuthorizationClick={isSignedIn ? signOut : signedIn}
+        onAuthorizationClick={isSignedIn ? handleSignOut : handleSignedIn}
       ></Header>
     </Box>
   );
