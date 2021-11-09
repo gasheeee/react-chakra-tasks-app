@@ -5,7 +5,7 @@ import { Header } from '../molecules/Header';
 type Props = {
   googleAuthInstance?: gapi.auth2.GoogleAuth;
   isSignedIn?: boolean;
-  taskList?: gapi.client.tasks.TaskList[]
+  taskList?: gapi.client.tasks.TaskList[];
   initialClient: () => void;
   handleSignedIn: () => void;
   handleSignOut: () => void;

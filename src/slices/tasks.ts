@@ -3,12 +3,12 @@ import {
   createSlice,
   SerializedError,
 } from '@reduxjs/toolkit';
-import {tasklist} from "../api/tasks";
+import { tasklist } from '../api/tasks';
 
 export interface tasksState {
   taskList?: gapi.client.tasks.TaskList[];
   error?: SerializedError;
-};
+}
 
 const initialState: tasksState = {
   taskList: undefined,
@@ -16,8 +16,8 @@ const initialState: tasksState = {
 };
 
 export interface tasksType {
-  taskList?: gapi.client.tasks.TaskList[]
-};
+  taskList?: gapi.client.tasks.TaskList[];
+}
 
 // Fetch TaskList
 export const taskList = createAsyncThunk<tasksType>(
