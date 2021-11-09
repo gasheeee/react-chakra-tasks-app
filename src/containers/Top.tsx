@@ -4,7 +4,7 @@ import { Top } from 'components/pages/Top';
 import { useDispatch } from 'react-redux';
 import { authorize, signIn, signOut } from '../slices/auth';
 import { useSelector } from '../store';
-import { isSignedInSelector } from '../selectors/auth';
+import { selectIsSignedIn } from '../selectors/auth';
 
 export const TopContainer: FC = () => {
   const dispatch = useDispatch();
@@ -17,7 +17,7 @@ export const TopContainer: FC = () => {
   const handleSignOut = useCallback(() => {
     dispatch(signOut());
   }, [dispatch]);
-  const isSignedIn = useSelector(isSignedInSelector);
+  const isSignedIn = useSelector(selectIsSignedIn);
 
   return (
     <Top
