@@ -7,17 +7,17 @@ import {
 import { authorization, signin, signout } from '../api/authorization';
 
 export interface AuthState {
-  isSignedIn?: boolean;
+  isSignedIn: boolean;
   error?: SerializedError;
 }
 
 const initialState: AuthState = {
-  isSignedIn: undefined,
+  isSignedIn: false,
   error: undefined,
 };
 
 export interface authorizeType {
-  isSignedIn?: boolean;
+  isSignedIn: boolean;
 }
 
 // Create Google Auth2 Instance & SignedIn
