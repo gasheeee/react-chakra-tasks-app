@@ -4,10 +4,12 @@ import {
   TypedUseSelectorHook,
 } from 'react-redux';
 import { authSlice } from './slices/auth';
+import {tasksSlice} from "./slices/tasks";
 
 export const store = configureStore({
   reducer: {
     auth: authSlice.reducer,
+    tasks: tasksSlice.reducer,
   },
 });
 
