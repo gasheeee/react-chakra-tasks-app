@@ -4,7 +4,7 @@ import { Header } from '../molecules/Header';
 
 type Props = {
   googleAuthInstance?: gapi.auth2.GoogleAuth;
-  isSignedIn?: boolean;
+  isSignedIn: boolean;
   initialClient: () => void;
   handleSignedIn: () => void;
   handleSignOut: () => void;

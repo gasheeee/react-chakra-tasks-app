@@ -1,13 +1,12 @@
-import React, { FC, MouseEventHandler, useEffect } from 'react';
+import React, { FC, MouseEventHandler } from 'react';
 import { Box, Button, Flex, Heading } from '@chakra-ui/react';
 
 type Props = {
-  isSignedIn?: boolean;
+  isSignedIn: boolean;
   onAuthorizationClick: MouseEventHandler<HTMLButtonElement>;
 };
 
 export const Header: FC<Props> = (props) => {
-  useEffect(() => {}, [props.isSignedIn]);
   return (
     <>
       <header>
