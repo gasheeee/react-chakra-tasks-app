@@ -1,5 +1,5 @@
 //redux系書く
-import React, {FC, useCallback, useState} from 'react';
+import React, { FC, useCallback, useState } from 'react';
 import { Top } from 'components/pages/Top';
 import { useDispatch } from 'react-redux';
 import { authorize, signIn, signOut } from '../slices/auth';

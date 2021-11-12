@@ -25,9 +25,7 @@ export interface tasksType {
   tasks?: gapi.client.tasks.Task[];
 }
 
-interface tasksParameterType {
-
-}
+interface tasksParameterType {}
 
 // Fetch TaskList
 export const taskList = createAsyncThunk<taskListType>(
@@ -41,7 +39,6 @@ export const taskList = createAsyncThunk<taskListType>(
     return res;
   }
 );
-
 
 // Fetch Tasks
 export const tasks = createAsyncThunk<tasksType>(
