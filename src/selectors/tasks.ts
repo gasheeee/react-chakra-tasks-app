@@ -10,3 +10,11 @@ export const tasksSelector = (state: RootState) => state.tasks;
 export const selectTaskList = createSelector(tasksSelector, (tasks) => {
   return tasks.taskList;
 });
+
+/**
+ * tasklist内のタスク一覧を取得する
+ * @return tasks
+ */
+export const selectTasks = createSelector(tasksSelector, (tasks) => {
+  return tasks.tasks;
+});

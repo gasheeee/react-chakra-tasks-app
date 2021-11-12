@@ -10,23 +10,23 @@ export const Header: FC<Props> = (props) => {
   return (
     <header>
       <Flex
-        as="nav"
-        align="center"
-        bg="teal.500"
-        color="white"
-        justify="space-between"
+        as='nav'
+        align='center'
+        bg='teal.500'
+        color='white'
+        justify='space-between'
         padding={6}
       >
-        <Flex align="center">
-          <Heading as="h1" size="lg" letterSpacing={'tighter'}>
+        <Flex align='center'>
+          <Heading as='h1' size='lg' letterSpacing={'tighter'}>
             Google Tasks App
           </Heading>
         </Flex>
-        <Box d="block">
+        <Box d='block'>
           <Button
-            bg="teal.500"
+            bg='teal.500'
             onClick={props.onAuthorizationClick}
-            variant="outline"
+            variant='outline'
             _hover={{ bg: 'teal.700', borderColor: 'teal.700' }}
           >
             {props.isSignedIn ? 'sign out' : 'sign in'}
