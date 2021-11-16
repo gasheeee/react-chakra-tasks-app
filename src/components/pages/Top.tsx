@@ -41,46 +41,10 @@ export const Top: FC<Props> = (props: Props) => {
     handleSignOut,
     fetchTaskList,
     fetchTasks,
-    createTaskList,
+    createTaskList,//あとで使う予定です
   } = props;
 
   const [tabIndex, setTabIndex] = useState(0);
-
-  const StyledTab = chakra('button', { label: 'Tabs.Tab' });
-  const AddNewTaskTab = React.forwardRef((props, ref) => {
-    const tabProps = useTab({
-      ...props,
-      ref: ref as Ref<HTMLElement>,
-      onClick: addNewTaskTabClick,
-    });
-    const styles = useStyles();
-
-    return (
-      <StyledTab __css={styles.tab} {...tabProps}>
-        {'＋新しいタスク'}
-      </StyledTab>
-    );
-  });
-
-  const addNewTaskTabClick = () => {
-    return (
-      <>
-        <Tab>
-          <form onSubmit={submitNewTask}>
-            <Input onChange={taskTitleChange} variant="Outline" />
-          </form>
-        </Tab>
-      </>
-    );
-  };
-  const [taskTitle, setTaskTitle] = useState('');
-  const taskTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTaskTitle(() => event.currentTarget.value);
-  };
-  const submitNewTask = () => {
-    if (!taskTitle) return;
-    createTaskList(taskTitle);
-  };
 
   useEffect(() => {
     if (!!googleAuthInstance) return;
@@ -121,7 +85,6 @@ export const Top: FC<Props> = (props: Props) => {
                       </React.Fragment>
                     );
                   })}
-                <AddNewTaskTab></AddNewTaskTab>
               </TabList>
             </Flex>
             <Flex alignItems="center" justify="flex-end" mt={4} mr={4}>
