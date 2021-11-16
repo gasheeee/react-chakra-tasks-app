@@ -41,7 +41,7 @@ export const Top: FC<Props> = (props: Props) => {
     handleSignOut,
     fetchTaskList,
     fetchTasks,
-    createTaskList,//あとで使う予定です
+    createTaskList, //あとで使う予定です
   } = props;
 
   const [tabIndex, setTabIndex] = useState(0);
