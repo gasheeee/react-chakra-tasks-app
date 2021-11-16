@@ -1,4 +1,4 @@
-import React, { FC, Ref, useEffect, useRef, useState } from 'react';
+import React, { FC, Ref, useEffect, useState } from 'react';
 import {
   Box,
   chakra,
