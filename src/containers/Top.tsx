@@ -1,11 +1,11 @@
 //redux系書く
-import React, { FC, useCallback, useState } from 'react';
+import React, { FC, useCallback } from 'react';
 import { Top } from 'components/pages/Top';
 import { useDispatch } from 'react-redux';
 import { authorize, signIn, signOut } from '../slices/auth';
 import { useSelector } from '../store';
 import { selectIsSignedIn } from '../selectors/auth';
-import { taskList, tasks } from '../slices/tasks';
+import { createtasklist, taskList, tasks } from '../slices/tasks';
 import { selectTaskList, selectTasks } from '../selectors/tasks';
 
 export const TopContainer: FC = () => {
@@ -24,8 +24,14 @@ export const TopContainer: FC = () => {
     dispatch(taskList());
   }, [dispatch]);
   const fetchTaskItem = useCallback(() => {
-    dispatch(tasks());
+    dispatch(tasks({ taskListId: 'MDE0MDI5NDA1NTIyMjU5NDU0ODE6MDow' }));
   }, [dispatch]);
+  const createTaskList = useCallback(
+    (title: string) => {
+      dispatch(createtasklist({ title }));
+    },
+    [dispatch]
+  );
   const isSignedIn = useSelector(selectIsSignedIn);
   const tasklist = useSelector(selectTaskList);
   const taskItem = useSelector(selectTasks);
@@ -40,6 +46,7 @@ export const TopContainer: FC = () => {
       handleSignOut={handleSignOut}
       fetchTaskList={fetchTaskList}
       fetchTasks={fetchTaskItem}
+      createTaskList={createTaskList}
     />
   );
 };

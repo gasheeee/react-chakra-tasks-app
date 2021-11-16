@@ -8,7 +8,7 @@ export const tasksSelector = (state: RootState) => state.tasks;
  * @return taskList
  */
 export const selectTaskList = createSelector(tasksSelector, (tasks) => {
-  return tasks.taskList;
+  return tasks.taskLists;
 });
 
 /**
