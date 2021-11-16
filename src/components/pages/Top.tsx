@@ -3,7 +3,6 @@ import {
   Box,
   chakra,
   Flex,
-  FormControl,
   IconButton,
   Input,
   Tab,
@@ -11,7 +10,6 @@ import {
   TabPanel,
   TabPanels,
   Tabs,
-  Text,
   useStyles,
   useTab,
 } from '@chakra-ui/react';
@@ -28,7 +26,7 @@ type Props = {
   handleSignedIn: () => void;
   handleSignOut: () => void;
   fetchTaskList: () => void;
-  fetchTasks: () => void;
+  fetchTasks: (taskListId: string) => void;
   createTaskList: (title: string) => void;
 };
 
@@ -84,8 +82,6 @@ export const Top: FC<Props> = (props: Props) => {
     createTaskList(taskTitle);
   };
 
-  const taskMock = ['hoge', 'hoge', 'hoge', 'hoge', 'hoge', 'hoge'];
-
   useEffect(() => {
     if (!!googleAuthInstance) return;
     initialClient();
@@ -94,15 +90,17 @@ export const Top: FC<Props> = (props: Props) => {
   useEffect(() => {
     if (!!taskList || !isSignedIn) return;
     fetchTaskList();
-  }, [isSignedIn, taskList]);
+  }, [isSignedIn]);
+
+  // useEffect(() => {
+  //   if (!taskList && !tasks) return;
+  //   fetchTasks(taskList[tabIndex].id);
+  // }, [taskList, tasks]);
 
   useEffect(() => {
-    fetchTasks();
-  }, [taskList]);
-
-  useEffect(() => {
-    if (!taskList && !!tasks) return;
-  }, [tabIndex, taskList, tasks]);
+    if (!taskList && !tabIndex && !tasks) return;
+    fetchTasks(taskList[tabIndex].id);
+  }, [tabIndex]);
 
   return (
     <Box>

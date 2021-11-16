@@ -23,9 +23,12 @@ export const TopContainer: FC = () => {
   const fetchTaskList = useCallback(() => {
     dispatch(taskList());
   }, [dispatch]);
-  const fetchTaskItem = useCallback(() => {
-    dispatch(tasks({ taskListId: 'MDE0MDI5NDA1NTIyMjU5NDU0ODE6MDow' }));
-  }, [dispatch]);
+  const fetchTaskItem = useCallback(
+    (taskListId: string) => {
+      dispatch(tasks({ taskListId }));
+    },
+    [dispatch]
+  );
   const createTaskList = useCallback(
     (title: string) => {
       dispatch(createtasklist({ title }));
