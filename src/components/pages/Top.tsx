@@ -92,10 +92,10 @@ export const Top: FC<Props> = (props: Props) => {
     fetchTaskList();
   }, [isSignedIn]);
 
-  // useEffect(() => {
-  //   if (!taskList && !tasks) return;
-  //   fetchTasks(taskList[tabIndex].id);
-  // }, [taskList, tasks]);
+  useEffect(() => {
+    if (!taskList) return;
+    fetchTasks(taskList[tabIndex].id);
+  }, [taskList]);
 
   useEffect(() => {
     if (!taskList && !tabIndex && !tasks) return;
