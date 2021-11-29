@@ -16,7 +16,7 @@ import {
 import { Header } from '../molecules/Header';
 import { TaskCard } from '../atoms/TaskCard';
 import { AddIcon } from '@chakra-ui/icons';
-import {AddTaskCard} from "../atoms/AddTaskCard";
+import { AddTaskCard } from '../atoms/AddTaskCard';
 
 type Props = {
   googleAuthInstance?: gapi.auth2.GoogleAuth;
@@ -62,9 +62,9 @@ export const Top: FC<Props> = (props: Props) => {
     if (!taskList || !taskList[tabIndex]?.id) return;
     await createTask(taskList[tabIndex].id, {
       title: title,
-      notes: description
+      notes: description,
     });
-  }
+  };
 
   useEffect(() => {
     if (taskStatus || !taskList || !taskList[tabIndex]?.id) return;
@@ -113,7 +113,11 @@ export const Top: FC<Props> = (props: Props) => {
               </TabList>
             </Flex>
             <Flex alignItems="center" justify="flex-end" mt={4} mr={4}>
-              <IconButton aria-label="add task" icon={<AddIcon />} onClick={addTaskButtonTap}></IconButton>
+              <IconButton
+                aria-label="add task"
+                icon={<AddIcon />}
+                onClick={addTaskButtonTap}
+              ></IconButton>
             </Flex>
             <TabPanels>
               {!!taskList &&

@@ -3,7 +3,12 @@ import {
   createSlice,
   SerializedError,
 } from '@reduxjs/toolkit';
-import {createTask, createTaskList, fetchTaskList, fetchTasks} from '../api/tasks';
+import {
+  createTask,
+  createTaskList,
+  fetchTaskList,
+  fetchTasks,
+} from '../api/tasks';
 
 export interface tasksState {
   taskLists?: gapi.client.tasks.TaskList[];
@@ -138,7 +143,7 @@ export const createtasklist = createAsyncThunk<
 export const createtask = createAsyncThunk<
   taskListType,
   createTaskParameterType
-  >('createTask', async ({ tasklist, body: body}): Promise<taskListType> => {
+>('createTask', async ({ tasklist, body: body }): Promise<taskListType> => {
   if (!gapi) {
     throw new Error('gapi is not defined');
   }

@@ -5,8 +5,12 @@ import { useDispatch } from 'react-redux';
 import { authorize, signIn, signOut } from '../slices/auth';
 import { useSelector } from '../store';
 import { selectIsSignedIn } from '../selectors/auth';
-import {createtask, createtasklist, taskList, tasks} from '../slices/tasks';
-import {selectTaskList, selectTasks, selectTaskStatus} from '../selectors/tasks';
+import { createtask, createtasklist, taskList, tasks } from '../slices/tasks';
+import {
+  selectTaskList,
+  selectTasks,
+  selectTaskStatus,
+} from '../selectors/tasks';
 
 export const TopContainer: FC = () => {
   const dispatch = useDispatch();
@@ -36,10 +40,7 @@ export const TopContainer: FC = () => {
     [dispatch]
   );
   const createTask = useCallback(
-    (
-      tasklist: string,
-      body: object
-    ) => {
+    (tasklist: string, body: object) => {
       dispatch(createtask({ tasklist, body }));
     },
     [dispatch]
