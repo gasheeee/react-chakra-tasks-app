@@ -18,3 +18,7 @@ export const selectTaskList = createSelector(tasksSelector, (tasks) => {
 export const selectTasks = createSelector(tasksSelector, (tasks) => {
   return tasks.tasks;
 });
+
+export const selectTaskStatus = createSelector(tasksSelector, (tasks) => {
+  return tasks.task.loading;
+});
