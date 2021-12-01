@@ -70,7 +70,7 @@ export const Top: FC<Props> = (props: Props) => {
   }, [taskList]);
 
   useEffect(() => {
-    if (!taskList || !taskList[tabIndex].id && !tabIndex) return;
+    if (!taskList || (!taskList[tabIndex].id && !tabIndex)) return;
     fetchTasks(taskList[tabIndex].id!!);
   }, [tabIndex]);
 
