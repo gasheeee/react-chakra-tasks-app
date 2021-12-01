@@ -65,18 +65,18 @@ export const Top: FC<Props> = (props: Props) => {
   }, [isSignedIn]);
 
   useEffect(() => {
-    if (!taskList) return;
-    fetchTasks(taskList[tabIndex].id);
+    if (!taskList || !taskList[tabIndex].id) return;
+    fetchTasks(taskList[tabIndex].id!!);
   }, [taskList]);
 
   useEffect(() => {
-    if (!taskList && !tabIndex) return;
-    fetchTasks(taskList[tabIndex].id);
+    if (!taskList || !taskList[tabIndex].id && !tabIndex) return;
+    fetchTasks(taskList[tabIndex].id!!);
   }, [tabIndex]);
 
   useEffect(() => {
     if (taskStatus || !taskList || !taskList[tabIndex].id) return;
-    fetchTasks(taskList[tabIndex].id);
+    fetchTasks(taskList[tabIndex].id!!);
   }, [taskStatus]);
 
   const addTaskButtonTap = () => {};
@@ -84,7 +84,7 @@ export const Top: FC<Props> = (props: Props) => {
   const submitNewTask = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!taskList || !taskList[tabIndex].id) return;
-    await createTask(taskList[tabIndex].id, {
+    await createTask(taskList[tabIndex].id!!, {
       title: title,
       notes: description,
     });
@@ -96,7 +96,7 @@ export const Top: FC<Props> = (props: Props) => {
   ) => {
     e.preventDefault();
     if (!taskList || !taskList[tabIndex].id || !tasks) return;
-    await deleteTask(taskList[tabIndex].id, tasks[index].id);
+    await deleteTask(taskList[tabIndex].id!!, tasks[index].id!!);
   };
 
   return (
