@@ -1,17 +1,13 @@
-import React, { FC, Ref, useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import {
   Box,
-  chakra,
   Flex,
   IconButton,
-  Input,
   Tab,
   TabList,
   TabPanel,
   TabPanels,
   Tabs,
-  useStyles,
-  useTab,
 } from '@chakra-ui/react';
 import { Header } from '../molecules/Header';
 import { TaskCard } from '../atoms/TaskCard';
@@ -31,6 +27,7 @@ type Props = {
   fetchTasks: (taskListId: string) => void;
   createTaskList: (title: string) => void;
   createTask: (tasklist: string, body: object) => void;
+  deleteTask: (tasklist: string, task: string) => void;
 };
 
 export const Top: FC<Props> = (props: Props) => {
@@ -47,29 +44,15 @@ export const Top: FC<Props> = (props: Props) => {
     fetchTasks,
     createTaskList, //あとで使う予定です
     createTask,
+    deleteTask,
   } = props;
 
+  //選択されているタブ
   const [tabIndex, setTabIndex] = useState(0);
-
-  //タスクカード追加時要素
+  //追加するタスクカードのタイトル
   const [title, setTitle] = useState('');
+  //追加するタスクカードの内容
   const [description, setDescription] = useState('');
-
-  const addTaskButtonTap = () => {};
-
-  const submitNewTask = async (e) => {
-    e.preventDefault();
-    if (!taskList || !taskList[tabIndex]?.id) return;
-    await createTask(taskList[tabIndex].id, {
-      title: title,
-      notes: description,
-    });
-  };
-
-  useEffect(() => {
-    if (taskStatus || !taskList || !taskList[tabIndex]?.id) return;
-    fetchTasks(taskList[tabIndex].id);
-  }, [taskStatus]);
 
   useEffect(() => {
     if (!!googleAuthInstance) return;
@@ -90,6 +73,31 @@ export const Top: FC<Props> = (props: Props) => {
     if (!taskList && !tabIndex) return;
     fetchTasks(taskList[tabIndex].id);
   }, [tabIndex]);
+
+  useEffect(() => {
+    if (taskStatus || !taskList || !taskList[tabIndex].id) return;
+    fetchTasks(taskList[tabIndex].id);
+  }, [taskStatus]);
+
+  const addTaskButtonTap = () => {};
+  //タスク追加ボタン押下イベント
+  const submitNewTask = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!taskList || !taskList[tabIndex].id) return;
+    await createTask(taskList[tabIndex].id, {
+      title: title,
+      notes: description,
+    });
+  };
+  //タスク削除ボタン押下イベント
+  const deleteButtonTap = async (
+    index: number,
+    e: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    e.preventDefault();
+    if (!taskList || !taskList[tabIndex].id || !tasks) return;
+    await deleteTask(taskList[tabIndex].id, tasks[index].id);
+  };
 
   return (
     <Box>
@@ -137,6 +145,7 @@ export const Top: FC<Props> = (props: Props) => {
                                 content={content.notes}
                                 title={content.title}
                                 updatedTime={content.due}
+                                deleteTask={(e) => deleteButtonTap(index, e)}
                               ></TaskCard>
                             </Box>
                           );

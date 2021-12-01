@@ -7,7 +7,15 @@ type tasksType = {
 };
 
 type createTaskListType = {
-  title?: string;
+  completed: boolean;
+};
+
+type createTaskType = {
+  completed: boolean;
+};
+
+type deleteTaskType = {
+  completed: boolean;
 };
 
 /**
@@ -18,8 +26,8 @@ export const fetchTaskList = async (): Promise<taskListsType> => {
   const res: taskListsType = await new Promise(async (resolve, reject) => {
     await gapi.client.tasks.tasklists
       .list({ maxResults: 10 })
-      .then((response) => {
-        resolve({ taskLists: response.result.items });
+      .then((res) => {
+        resolve({ taskLists: res.result.items });
       })
       .catch((error) => {
         reject(error);
@@ -59,7 +67,7 @@ export const createTaskList = async (
     await gapi.client.tasks.tasklists
       .insert({ resource: { title } })
       .then((res) => {
-        resolve({ title: res.result.title });
+        resolve({ completed: !!res.result });
       })
       .catch((error) => {
         reject(error);
@@ -128,13 +136,35 @@ export const createTask = async (
     /** Last modification time of the task (as a RFC 3339 timestamp). */
     updated?: string;
   }
-): Promise<createTaskListType> => {
-  const res: createTaskListType = await new Promise(async (resolve, reject) => {
+): Promise<createTaskType> => {
+  const res: createTaskType = await new Promise(async (resolve, reject) => {
     await gapi.client.tasks.tasks
       .insert({ tasklist, resource: body })
       .then((res) => {
-        console.log('then');
-        resolve({ title: res.result.title });
+        resolve({ completed: !!res.result });
+      })
+      .catch((error) => {
+        reject(error);
+        throw new Error(error);
+      });
+  });
+  return res;
+};
+
+/**
+ * task内のタスクを一件削除
+ * @param {string} tasklist
+ * @param {string} task
+ */
+export const deleteTask = async (
+  tasklist: string,
+  task: string
+): Promise<deleteTaskType> => {
+  const res: deleteTaskType = await new Promise(async (resolve, reject) => {
+    await gapi.client.tasks.tasks
+      .delete({ tasklist, task })
+      .then(() => {
+        resolve({ completed: true });
       })
       .catch((error) => {
         reject(error);

@@ -10,7 +10,7 @@ import { Box, Button, Flex, Input } from '@chakra-ui/react';
 type Props = {
   setTitle: Dispatch<SetStateAction<string>>;
   setDescription: Dispatch<SetStateAction<string>>;
-  submitNewTask: () => void;
+  submitNewTask: (event: React.FormEvent<HTMLFormElement>) => Promise<void>;
 };
 
 export const AddTaskCard: FC<Props> = (props) => {
