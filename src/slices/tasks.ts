@@ -6,9 +6,11 @@ import {
 import {
   createTask,
   createTaskList,
+  deleteTask,
   fetchTaskList,
   fetchTasks,
 } from '../api/tasks';
+import { storage_v1 } from 'googleapis';
 
 export interface tasksState {
   taskLists?: gapi.client.tasks.TaskList[];
@@ -40,8 +42,16 @@ interface tasksParameterType {
   taskListId: string;
 }
 
+interface createTaskListType {
+  completed: boolean;
+}
+
 interface createTaskListParameterType {
   title: string;
+}
+
+interface createTaskType {
+  completed: boolean;
 }
 
 interface createTaskParameterType {
@@ -100,6 +110,15 @@ interface createTaskParameterType {
   };
 }
 
+interface deleteTaskType {
+  completed: boolean;
+}
+
+interface deleteTaskParameterType {
+  tasklist: string;
+  task: string;
+}
+
 // Fetch TaskList
 export const taskList = createAsyncThunk<taskListsType>(
   'taskLists',
@@ -112,6 +131,19 @@ export const taskList = createAsyncThunk<taskListsType>(
     return res;
   }
 );
+
+// Create TaskList
+export const createtasklist = createAsyncThunk<
+  createTaskListType,
+  createTaskListParameterType
+>('createTaskList', async ({ title }): Promise<createTaskListType> => {
+  if (!gapi) {
+    throw new Error('gapi is not defined');
+  }
+
+  const res = await createTaskList(title);
+  return res;
+});
 
 // Fetch Tasks
 export const tasks = createAsyncThunk<tasksType, tasksParameterType>(
@@ -126,29 +158,29 @@ export const tasks = createAsyncThunk<tasksType, tasksParameterType>(
   }
 );
 
-// Create TaskList
-export const createtasklist = createAsyncThunk<
-  taskListType,
-  createTaskListParameterType
->('createTaskList', async ({ title }): Promise<taskListType> => {
-  if (!gapi) {
-    throw new Error('gapi is not defined');
-  }
-
-  const res = await createTaskList(title);
-  return res;
-});
-
 // Create Task
 export const createtask = createAsyncThunk<
-  taskListType,
+  createTaskType,
   createTaskParameterType
->('createTask', async ({ tasklist, body: body }): Promise<taskListType> => {
+>('createTask', async ({ tasklist, body: body }): Promise<createTaskType> => {
   if (!gapi) {
     throw new Error('gapi is not defined');
   }
 
   const res = await createTask(tasklist, body);
+  return res;
+});
+
+// Delete Task
+export const deletetask = createAsyncThunk<
+  deleteTaskType,
+  deleteTaskParameterType
+>('deleteTask', async ({ tasklist, task }): Promise<deleteTaskType> => {
+  if (!gapi) {
+    throw new Error('gapi is not defined');
+  }
+
+  const res = await deleteTask(tasklist, task);
   return res;
 });
 
@@ -173,9 +205,18 @@ export const tasksSlice = createSlice({
       state.task.loading = true;
     });
     builder.addCase(createtask.fulfilled, (state, action) => {
-      state.task.loading = false;
+      state.task.loading = !action.payload.completed;
     });
     builder.addCase(createtask.rejected, (state, action) => {
+      state.error = action.error;
+    });
+    builder.addCase(deletetask.pending, (state, action) => {
+      state.task.loading = true;
+    });
+    builder.addCase(deletetask.fulfilled, (state, action) => {
+      state.task.loading = !action.payload.completed;
+    });
+    builder.addCase(deletetask.rejected, (state, action) => {
       state.error = action.error;
     });
   },

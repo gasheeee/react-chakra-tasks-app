@@ -15,10 +15,11 @@ type Props = {
   title?: string;
   updatedTime?: string;
   content?: string;
+  deleteTask: (event: React.MouseEvent<HTMLButtonElement>) => Promise<void>;
 };
 
 export const TaskCard: FC<Props> = (props) => {
-  const { title, updatedTime, content } = props;
+  const { title, updatedTime, content, deleteTask } = props;
 
   return (
     <Box shadow="md" borderWidth="1px" p="4">
@@ -35,7 +36,9 @@ export const TaskCard: FC<Props> = (props) => {
           />
           <MenuList>
             <MenuItem icon={<EditIcon />}>edit</MenuItem>
-            <MenuItem icon={<DeleteIcon />}>delete</MenuItem>
+            <MenuItem icon={<DeleteIcon />} onClick={deleteTask}>
+              delete
+            </MenuItem>
           </MenuList>
         </Menu>
       </Flex>

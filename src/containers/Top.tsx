@@ -5,7 +5,13 @@ import { useDispatch } from 'react-redux';
 import { authorize, signIn, signOut } from '../slices/auth';
 import { useSelector } from '../store';
 import { selectIsSignedIn } from '../selectors/auth';
-import { createtask, createtasklist, taskList, tasks } from '../slices/tasks';
+import {
+  createtask,
+  createtasklist,
+  deletetask,
+  taskList,
+  tasks,
+} from '../slices/tasks';
 import {
   selectTaskList,
   selectTasks,
@@ -15,6 +21,10 @@ import {
 export const TopContainer: FC = () => {
   const dispatch = useDispatch();
 
+  const isSignedIn = useSelector(selectIsSignedIn);
+  const tasklist = useSelector(selectTaskList);
+  const taskItem = useSelector(selectTasks);
+  const taskStatus = useSelector(selectTaskStatus);
   const initialClient = useCallback(() => {
     dispatch(authorize());
   }, [dispatch]);
@@ -45,10 +55,12 @@ export const TopContainer: FC = () => {
     },
     [dispatch]
   );
-  const isSignedIn = useSelector(selectIsSignedIn);
-  const tasklist = useSelector(selectTaskList);
-  const taskItem = useSelector(selectTasks);
-  const taskStatus = useSelector(selectTaskStatus);
+  const deleteTask = useCallback(
+    (tasklist: string, task: string) => {
+      dispatch(deletetask({ tasklist, task }));
+    },
+    [dispatch]
+  );
 
   return (
     <Top
@@ -63,6 +75,7 @@ export const TopContainer: FC = () => {
       fetchTasks={fetchTaskItem}
       createTaskList={createTaskList}
       createTask={createTask}
+      deleteTask={deleteTask}
     />
   );
 };
