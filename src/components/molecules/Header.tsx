@@ -6,7 +6,7 @@ type Props = {
   onAuthorizationClick: MouseEventHandler<HTMLButtonElement>;
 };
 
-export const Header: FC<Props> = (props) => {
+export const Header: FC<Props> = ({ isSignedIn, onAuthorizationClick }) => {
   return (
     <header>
       <Flex
@@ -25,11 +25,11 @@ export const Header: FC<Props> = (props) => {
         <Box d="block">
           <Button
             bg="teal.500"
-            onClick={props.onAuthorizationClick}
+            onClick={onAuthorizationClick}
             variant="outline"
             _hover={{ bg: 'teal.700', borderColor: 'teal.700' }}
           >
-            {props.isSignedIn ? 'sign out' : 'sign in'}
+            {isSignedIn ? 'sign out' : 'sign in'}
           </Button>
         </Box>
       </Flex>
