@@ -1,13 +1,9 @@
-import React, {
-  Dispatch,
-  FC,
-  SetStateAction,
-} from 'react';
+import React, { Dispatch, FC, SetStateAction } from 'react';
 import { Box, Button, Flex, Input } from '@chakra-ui/react';
 
 type Props = {
-  title: string,
-  description: string,
+  title: string;
+  description: string;
   setTitle: Dispatch<SetStateAction<string>>;
   setDescription: Dispatch<SetStateAction<string>>;
   submitNewTask: (event: React.FormEvent<HTMLFormElement>) => Promise<void>;
@@ -23,7 +19,7 @@ export const AddTaskCard: FC<Props> = (props) => {
           mb={2}
           placeholder="title"
           size="md"
-          onChange={e => setTitle(e.currentTarget.value)}
+          onChange={(e) => setTitle(e.currentTarget.value)}
           value={title}
           variant="flushed"
         />
@@ -31,7 +27,7 @@ export const AddTaskCard: FC<Props> = (props) => {
           mb={2}
           placeholder="description"
           size="sm"
-          onChange={e => setDescription(e.currentTarget.value)}
+          onChange={(e) => setDescription(e.currentTarget.value)}
           value={description}
           variant="flushed"
         />
