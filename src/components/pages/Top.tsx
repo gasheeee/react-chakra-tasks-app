@@ -2,7 +2,6 @@ import React, { FC, useEffect, useState } from 'react';
 import {
   Box,
   Flex,
-  IconButton,
   Tab,
   TabList,
   TabPanel,
@@ -10,9 +9,8 @@ import {
   Tabs,
 } from '@chakra-ui/react';
 import { Header } from '../molecules/Header';
-import { TaskCard } from '../atoms/TaskCard';
-import { AddIcon } from '@chakra-ui/icons';
-import { AddTaskCard } from '../atoms/AddTaskCard';
+import { TaskCard } from '../molecules/TaskCard';
+import { AddTaskCard } from '../molecules/AddTaskCard';
 
 type Props = {
   googleAuthInstance?: gapi.auth2.GoogleAuth;
@@ -27,6 +25,7 @@ type Props = {
   fetchTasks: (taskListId: string) => void;
   createTaskList: (title: string) => void;
   createTask: (tasklist: string, body: object) => void;
+  updatedTask: (tasklist: string, task: string, body: object) => void;
   deleteTask: (tasklist: string, task: string) => void;
 };
 
@@ -44,15 +43,22 @@ export const Top: FC<Props> = (props: Props) => {
     fetchTasks,
     createTaskList, //あとで使う予定です
     createTask,
+    updatedTask,
     deleteTask,
   } = props;
 
   //選択されているタブ
   const [tabIndex, setTabIndex] = useState(0);
-  //追加するタスクカードのタイトル
+  //タスクカードが更新できるか
+  const [isEdit, setIsEdit] = useState(false);
+  //更新するタスクカードのタイトル
   const [title, setTitle] = useState('');
-  //追加するタスクカードの内容
+  //更新するタスクカードの内容
   const [description, setDescription] = useState('');
+  //追加する新規タスクカードのタイトル
+  const [newTitle, setNewTitle] = useState('');
+  //追加する新規タスクカードの内容
+  const [newDescription, setNewDescription] = useState('');
 
   useEffect(() => {
     if (!!googleAuthInstance) return;
@@ -79,19 +85,41 @@ export const Top: FC<Props> = (props: Props) => {
     fetchTasks(taskList[tabIndex].id!!);
   }, [taskStatus]);
 
-  const addTaskButtonTap = () => {};
   //タスク追加ボタン押下イベント
-  const submitNewTask = async (e: React.FormEvent<HTMLFormElement>) => {
+  const submitTask = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!taskList || !taskList[tabIndex].id) return;
+    setNewTitle('');
+    setNewDescription('');
+    await createTask(taskList[tabIndex].id!!, {
+      title: newTitle,
+      notes: newDescription,
+    });
+  };
+  //キャンセルボタン押下イベント
+  const cancelButtonTap = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setTitle('');
+    setDescription('');
+    setNewTitle('');
+    setNewDescription('');
+  };
+  //タスク更新ボタン押下イベント
+  const updateTask = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!taskList || !taskList[tabIndex].id) return;
     setTitle('');
     setDescription('');
-    await createTask(taskList[tabIndex].id!!, {
+    await updatedTask(taskList[tabIndex].id!!, tasks[0].id!!, {
       title: title,
       notes: description,
     });
   };
-  //タスク削除ボタン押下イベント
+  //右上Menu内のタスク更新ボタン押下イベント
+  const updatedButtonTap = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+  };
+  //右上Menu内のタスク削除ボタン押下イベント
   const deleteButtonTap = async (
     index: number,
     e: React.MouseEvent<HTMLButtonElement>
@@ -111,7 +139,7 @@ export const Top: FC<Props> = (props: Props) => {
         {!!taskList ? (
           <Tabs onChange={(index) => setTabIndex(index)} variant="enclosed">
             <Flex align="top" justify="space-between">
-              <TabList flexGrow={1} mr={4}>
+              <TabList flexGrow={1} mr={4} mb={4}>
                 {!!taskList &&
                   taskList.map((item, idx) => {
                     return (
@@ -122,34 +150,43 @@ export const Top: FC<Props> = (props: Props) => {
                   })}
               </TabList>
             </Flex>
-            <Flex alignItems="center" justify="flex-end" mt={4} mr={4}>
-              <IconButton
-                aria-label="add task"
-                icon={<AddIcon />}
-                onClick={addTaskButtonTap}
-              ></IconButton>
-            </Flex>
+            {/*<Flex alignItems="center" justify="flex-end" mt={4} mr={4}>*/}
+            {/*  <IconButton*/}
+            {/*    aria-label="add task"*/}
+            {/*    icon={<AddIcon />}*/}
+            {/*    onClick={addTaskButtonTap}*/}
+            {/*  ></IconButton>*/}
+            {/*</Flex>*/}
             <TabPanels>
               {!!taskList &&
                 taskList.map((taskListItem, idx) => {
                   return (
                     <TabPanel key={idx} pl={0} pt={2}>
-                      <AddTaskCard
-                        title={title}
-                        description={description}
-                        setTitle={setTitle}
-                        setDescription={setDescription}
-                        submitNewTask={submitNewTask}
-                      ></AddTaskCard>
+                      <Box mb={4}>
+                        <AddTaskCard
+                          newTitle={newTitle}
+                          newDescription={newDescription}
+                          setNewTitle={setNewTitle}
+                          setNewDescription={setNewDescription}
+                          submitNewTask={submitTask}
+                          cancelButtonTap={cancelButtonTap}
+                        ></AddTaskCard>
+                      </Box>
                       {!!tasks &&
                         tasks.map((content, index) => {
                           return (
-                            <Box key={index} mb="2%">
+                            <Box key={index} mb={4}>
                               <TaskCard
                                 content={content.notes}
                                 title={content.title}
-                                updatedTime={content.due}
-                                deleteTask={(e) => deleteButtonTap(index, e)}
+                                setTitle={setTitle}
+                                setDescription={setDescription}
+                                updateTask={updateTask}
+                                updatedButtonTap={(e) => updatedButtonTap(e)}
+                                cancelButtonTap={cancelButtonTap}
+                                deleteButtonTap={(e) =>
+                                  deleteButtonTap(index, e)
+                                }
                               ></TaskCard>
                             </Box>
                           );
