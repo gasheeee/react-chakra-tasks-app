@@ -84,6 +84,8 @@ export const Top: FC<Props> = (props: Props) => {
   const submitNewTask = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!taskList || !taskList[tabIndex].id) return;
+    setTitle('');
+    setDescription('');
     await createTask(taskList[tabIndex].id!!, {
       title: title,
       notes: description,
@@ -133,6 +135,8 @@ export const Top: FC<Props> = (props: Props) => {
                   return (
                     <TabPanel key={idx} pl={0} pt={2}>
                       <AddTaskCard
+                        title={title}
+                        description={description}
                         setTitle={setTitle}
                         setDescription={setDescription}
                         submitNewTask={submitNewTask}
