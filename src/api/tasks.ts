@@ -115,7 +115,7 @@ export const updatedTask = async (
 ): Promise<completedApiType> => {
   const res: completedApiType = await new Promise(async (resolve, reject) => {
     await gapi.client.tasks.tasks
-      .update({ tasklist, task, resource: body })
+      .update({ tasklist: tasklist, task: task, resource: body })
       .then((res) => {
         resolve({ completed: !!res.result });
       })

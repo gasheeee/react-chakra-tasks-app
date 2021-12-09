@@ -1,12 +1,12 @@
 import React, { Dispatch, FC, SetStateAction } from 'react';
-import { Button, Flex, Input } from '@chakra-ui/react';
+import { Button, Flex, Input, Textarea } from '@chakra-ui/react';
 
 type Props = {
   title: string;
   description: string;
+  submitButtonText: string;
   setTitle: Dispatch<SetStateAction<string>>;
   setDescription: Dispatch<SetStateAction<string>>;
-  submitButtonText: string;
   submitForm: (event: React.FormEvent<HTMLFormElement>) => Promise<void>;
   cancelButtonTap: (event: React.MouseEvent<HTMLButtonElement>) => void;
 };
@@ -32,13 +32,12 @@ export const TaskForm: FC<Props> = (props) => {
         value={title}
         variant="flushed"
       />
-      <Input
+      <Textarea
         mb={2}
         placeholder="description"
         size="sm"
         onChange={(e) => setDescription(e.currentTarget.value)}
         value={description}
-        variant="flushed"
       />
       <Flex align="flex-start" justify="flex-end">
         <Button type="submit" colorScheme="teal" variant="solid">
@@ -51,7 +50,7 @@ export const TaskForm: FC<Props> = (props) => {
           ml={2}
           onClick={cancelButtonTap}
         >
-          キャンセル
+          cancel
         </Button>
       </Flex>
     </form>

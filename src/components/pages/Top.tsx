@@ -50,7 +50,9 @@ export const Top: FC<Props> = (props: Props) => {
   //選択されているタブ
   const [tabIndex, setTabIndex] = useState(0);
   //タスクカードが更新できるか
-  const [isEdit, setIsEdit] = useState(false);
+  const [isEditableTask, setIsEditableTask] = useState(false);
+  //更新するタスクカードIndex
+  const [taskIndex, setTaskIndex] = useState(0);
   //更新するタスクカードのタイトル
   const [title, setTitle] = useState('');
   //更新するタスクカードの内容
@@ -88,12 +90,26 @@ export const Top: FC<Props> = (props: Props) => {
   //タスク追加ボタン押下イベント
   const submitTask = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!taskList || !taskList[tabIndex].id) return;
+    if (!taskList || !taskList[tabIndex].id || (!newTitle && !newDescription))
+      return;
     setNewTitle('');
     setNewDescription('');
     await createTask(taskList[tabIndex].id!!, {
       title: newTitle,
       notes: newDescription,
+    });
+  };
+  //タスク更新ボタン押下イベント
+  const updateTask = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!taskList || !taskList[tabIndex].id || !tasks || !tasks[taskIndex].id)
+      return;
+    setTitle('');
+    setDescription('');
+    setIsEditableTask(false);
+    await updatedTask(taskList[tabIndex].id!!, tasks[taskIndex].id!!, {
+      title: title,
+      notes: description,
     });
   };
   //キャンセルボタン押下イベント
@@ -103,26 +119,25 @@ export const Top: FC<Props> = (props: Props) => {
     setDescription('');
     setNewTitle('');
     setNewDescription('');
+    setIsEditableTask(false);
   };
-  //タスク更新ボタン押下イベント
-  const updateTask = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (!taskList || !taskList[tabIndex].id) return;
-    setTitle('');
-    setDescription('');
-    await updatedTask(taskList[tabIndex].id!!, tasks[0].id!!, {
-      title: title,
-      notes: description,
-    });
-  };
-  //右上Menu内のタスク更新ボタン押下イベント
-  const updatedButtonTap = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-  };
-  //右上Menu内のタスク削除ボタン押下イベント
-  const deleteButtonTap = async (
+  //右上Menu内editボタン押下イベント
+  const updatedButtonTap = (
+    e: React.MouseEvent<HTMLButtonElement>,
     index: number,
-    e: React.MouseEvent<HTMLButtonElement>
+    title?: string,
+    description?: string
+  ) => {
+    e.preventDefault();
+    if (!!title) setTitle(title);
+    if (!!description) setDescription(description);
+    setTaskIndex(index);
+    setIsEditableTask(true);
+  };
+  //右上Menu内deleteボタン押下イベント
+  const deleteButtonTap = async (
+    e: React.MouseEvent<HTMLButtonElement>,
+    index: number
   ) => {
     e.preventDefault();
     if (!taskList || !taskList[tabIndex].id || !tasks) return;
@@ -139,12 +154,25 @@ export const Top: FC<Props> = (props: Props) => {
         {!!taskList ? (
           <Tabs onChange={(index) => setTabIndex(index)} variant="enclosed">
             <Flex align="top" justify="space-between">
-              <TabList flexGrow={1} mr={4} mb={4}>
+              <TabList
+                flexGrow={1}
+                mr={4}
+                mb={4}
+                overflowY="hidden"
+                sx={{
+                  scrollbarWidth: 'none',
+                  '::-webkit-scrollbar': {
+                    display: 'none',
+                  },
+                }}
+              >
                 {!!taskList &&
                   taskList.map((item, idx) => {
                     return (
                       <React.Fragment key={idx}>
-                        <Tab _focus={{ boxShadow: 'none' }}>{item.title}</Tab>
+                        <Tab _focus={{ boxShadow: 'none' }} flexShrink={0}>
+                          {item.title}
+                        </Tab>
                       </React.Fragment>
                     );
                   })}
@@ -164,11 +192,12 @@ export const Top: FC<Props> = (props: Props) => {
                     <TabPanel key={idx} pl={0} pt={2}>
                       <Box mb={4}>
                         <AddTaskCard
-                          newTitle={newTitle}
-                          newDescription={newDescription}
-                          setNewTitle={setNewTitle}
-                          setNewDescription={setNewDescription}
-                          submitNewTask={submitTask}
+                          title={newTitle}
+                          description={newDescription}
+                          submitButtonText={'add'}
+                          setTitle={setNewTitle}
+                          setDescription={setNewDescription}
+                          submitButtonTap={submitTask}
                           cancelButtonTap={cancelButtonTap}
                         ></AddTaskCard>
                       </Box>
@@ -176,18 +205,37 @@ export const Top: FC<Props> = (props: Props) => {
                         tasks.map((content, index) => {
                           return (
                             <Box key={index} mb={4}>
-                              <TaskCard
-                                content={content.notes}
-                                title={content.title}
-                                setTitle={setTitle}
-                                setDescription={setDescription}
-                                updateTask={updateTask}
-                                updatedButtonTap={(e) => updatedButtonTap(e)}
-                                cancelButtonTap={cancelButtonTap}
-                                deleteButtonTap={(e) =>
-                                  deleteButtonTap(index, e)
-                                }
-                              ></TaskCard>
+                              {isEditableTask && taskIndex === index ? (
+                                <>
+                                  <AddTaskCard
+                                    title={title}
+                                    description={description}
+                                    submitButtonText={'update'}
+                                    setTitle={setTitle}
+                                    setDescription={setDescription}
+                                    submitButtonTap={updateTask}
+                                    cancelButtonTap={cancelButtonTap}
+                                  ></AddTaskCard>
+                                </>
+                              ) : (
+                                <>
+                                  <TaskCard
+                                    content={content.notes}
+                                    title={content.title}
+                                    updatedButtonTap={(e) =>
+                                      updatedButtonTap(
+                                        e,
+                                        index,
+                                        content.title,
+                                        content.notes
+                                      )
+                                    }
+                                    deleteButtonTap={(e) =>
+                                      deleteButtonTap(e, index)
+                                    }
+                                  ></TaskCard>
+                                </>
+                              )}
                             </Box>
                           );
                         })}

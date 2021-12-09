@@ -3,33 +3,35 @@ import { Box } from '@chakra-ui/react';
 import { TaskForm } from '../atoms/TaskForm';
 
 type Props = {
-  newTitle: string;
-  newDescription: string;
-  setNewTitle: Dispatch<SetStateAction<string>>;
-  setNewDescription: Dispatch<SetStateAction<string>>;
-  submitNewTask: (event: React.FormEvent<HTMLFormElement>) => Promise<void>;
+  title: string;
+  description: string;
+  submitButtonText: string;
+  setTitle: Dispatch<SetStateAction<string>>;
+  setDescription: Dispatch<SetStateAction<string>>;
+  submitButtonTap: (event: React.FormEvent<HTMLFormElement>) => Promise<void>;
   cancelButtonTap: (event: React.MouseEvent<HTMLButtonElement>) => void;
 };
 
 export const AddTaskCard: FC<Props> = (props) => {
   const {
-    newTitle,
-    newDescription,
-    setNewTitle,
-    setNewDescription,
-    submitNewTask,
+    title,
+    description,
+    submitButtonText,
+    setTitle,
+    setDescription,
+    submitButtonTap,
     cancelButtonTap,
   } = props;
 
   return (
     <Box shadow="md" borderWidth="1px" p={4}>
       <TaskForm
-        title={newTitle}
-        description={newDescription}
-        setTitle={setNewTitle}
-        setDescription={setNewDescription}
-        submitButtonText={'追加'}
-        submitForm={submitNewTask}
+        title={title}
+        description={description}
+        setTitle={setTitle}
+        setDescription={setDescription}
+        submitButtonText={submitButtonText}
+        submitForm={submitButtonTap}
         cancelButtonTap={cancelButtonTap}
       ></TaskForm>
     </Box>
