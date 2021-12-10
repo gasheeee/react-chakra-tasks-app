@@ -78,7 +78,15 @@ export const Top: FC<Props> = (props: Props) => {
   }, [taskList]);
 
   useEffect(() => {
-    if (!taskList || (!taskList[tabIndex].id && !tabIndex)) return;
+    if (!!taskList && !!tabIndex && taskList.length === tabIndex) {
+      console.log(8888);
+    }
+    if (
+      !taskList ||
+      taskList.length === tabIndex ||
+      (!taskList[tabIndex].id && !tabIndex)
+    )
+      return;
     fetchTasks(taskList[tabIndex].id!!);
   }, [tabIndex]);
 
@@ -150,13 +158,12 @@ export const Top: FC<Props> = (props: Props) => {
         isSignedIn={isSignedIn}
         onAuthorizationClick={isSignedIn ? handleSignOut : handleSignedIn}
       ></Header>
-      <Box pt={16} px={16}>
+      <Box pt={[4, 4, 16, 16]} px={[4, 4, 16, 16]}>
         {!!taskList ? (
           <Tabs onChange={(index) => setTabIndex(index)} variant="enclosed">
             <Flex align="top" justify="space-between">
               <TabList
                 flexGrow={1}
-                mr={4}
                 mb={4}
                 overflowY="hidden"
                 sx={{
@@ -176,20 +183,16 @@ export const Top: FC<Props> = (props: Props) => {
                       </React.Fragment>
                     );
                   })}
+                <Tab _focus={{ boxShadow: 'none' }} flexShrink={0}>
+                  ＋新しいタスク
+                </Tab>
               </TabList>
             </Flex>
-            {/*<Flex alignItems="center" justify="flex-end" mt={4} mr={4}>*/}
-            {/*  <IconButton*/}
-            {/*    aria-label="add task"*/}
-            {/*    icon={<AddIcon />}*/}
-            {/*    onClick={addTaskButtonTap}*/}
-            {/*  ></IconButton>*/}
-            {/*</Flex>*/}
             <TabPanels>
               {!!taskList &&
                 taskList.map((taskListItem, idx) => {
                   return (
-                    <TabPanel key={idx} pl={0} pt={2}>
+                    <TabPanel key={idx} px={0} pt={2}>
                       <Box mb={4}>
                         <AddTaskCard
                           title={newTitle}
