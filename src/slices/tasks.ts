@@ -64,6 +64,8 @@ interface updatedTaskParameterType {
   tasklist: string;
   task: string;
   body: {
+    /** Task identifier. */
+    id?: string;
     /** Notes describing the task. Optional. */
     notes?: string;
     /** Title of the task. */
@@ -174,7 +176,7 @@ export const tasksSlice = createSlice({
     builder.addCase(tasks.rejected, (state, action) => {
       state.error = action.error;
     });
-    builder.addCase(createtask.pending, (state, action) => {
+    builder.addCase(createtask.pending, (state) => {
       state.task.loading = true;
     });
     builder.addCase(createtask.fulfilled, (state, action) => {
@@ -183,7 +185,7 @@ export const tasksSlice = createSlice({
     builder.addCase(createtask.rejected, (state, action) => {
       state.error = action.error;
     });
-    builder.addCase(updatedtask.pending, (state, action) => {
+    builder.addCase(updatedtask.pending, (state) => {
       state.task.loading = true;
     });
     builder.addCase(updatedtask.fulfilled, (state, action) => {
@@ -192,7 +194,7 @@ export const tasksSlice = createSlice({
     builder.addCase(updatedtask.rejected, (state, action) => {
       state.error = action.error;
     });
-    builder.addCase(deletetask.pending, (state, action) => {
+    builder.addCase(deletetask.pending, (state) => {
       state.task.loading = true;
     });
     builder.addCase(deletetask.fulfilled, (state, action) => {

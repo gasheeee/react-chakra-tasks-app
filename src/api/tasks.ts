@@ -70,7 +70,7 @@ export const createTaskList = async (
 };
 
 /**
- * tasklist内にタスクを追加
+ * tasks内にタスクを追加
  * @param {string} tasklist
  * @param {object} body
  */
@@ -107,6 +107,8 @@ export const updatedTask = async (
   tasklist: string,
   task: string,
   body: {
+    /** Task identifier. */
+    id?: string;
     /** Notes describing the task. Optional. */
     notes?: string;
     /** Title of the task. */

@@ -110,12 +110,12 @@ export const Top: FC<Props> = (props: Props) => {
   //タスク更新ボタン押下イベント
   const updateTask = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!taskList || !taskList[tabIndex].id || !tasks || !tasks[taskIndex].id)
-      return;
+    if (!taskList || !taskList[tabIndex].id || !tasks || !tasks[taskIndex].id) return;
     setTitle('');
     setDescription('');
     setIsEditableTask(false);
     await updatedTask(taskList[tabIndex].id!!, tasks[taskIndex].id!!, {
+      id: tasks[taskIndex].id,
       title: title,
       notes: description,
     });
