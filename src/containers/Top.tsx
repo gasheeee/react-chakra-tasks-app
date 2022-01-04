@@ -8,6 +8,7 @@ import { selectIsSignedIn } from '../selectors/auth';
 import {
   createtask,
   createtasklist,
+  updatedtask,
   deletetask,
   taskList,
   tasks,
@@ -55,6 +56,12 @@ export const TopContainer: FC = () => {
     },
     [dispatch]
   );
+  const updatedTask = useCallback(
+    (tasklist: string, task: string, body: object) => {
+      dispatch(updatedtask({ tasklist, task, body }));
+    },
+    [dispatch]
+  );
   const deleteTask = useCallback(
     (tasklist: string, task: string) => {
       dispatch(deletetask({ tasklist, task }));
@@ -75,6 +82,7 @@ export const TopContainer: FC = () => {
       fetchTasks={fetchTaskItem}
       createTaskList={createTaskList}
       createTask={createTask}
+      updatedTask={updatedTask}
       deleteTask={deleteTask}
     />
   );

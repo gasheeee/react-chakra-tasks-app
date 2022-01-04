@@ -13,18 +13,20 @@ import { DeleteIcon, EditIcon, HamburgerIcon } from '@chakra-ui/icons';
 
 type Props = {
   title?: string;
-  updatedTime?: string;
   content?: string;
-  deleteTask: (event: React.MouseEvent<HTMLButtonElement>) => Promise<void>;
+  updatedButtonTap: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  deleteButtonTap: (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => Promise<void>;
 };
 
 export const TaskCard: FC<Props> = (props) => {
-  const { title, updatedTime, content, deleteTask } = props;
+  const { title, content, updatedButtonTap, deleteButtonTap } = props;
 
   return (
-    <Box shadow="md" borderWidth="1px" p="4">
+    <Box shadow="md" borderWidth="1px" p={4}>
       <Flex align="top" justify="space-between">
-        <Text fontSize="lg" mb="3">
+        <Text fontSize="lg" mb={3}>
           {title}
         </Text>
         <Menu>
@@ -35,16 +37,15 @@ export const TaskCard: FC<Props> = (props) => {
             variant="outline"
           />
           <MenuList>
-            <MenuItem icon={<EditIcon />}>edit</MenuItem>
-            <MenuItem icon={<DeleteIcon />} onClick={deleteTask}>
+            <MenuItem icon={<EditIcon />} onClick={updatedButtonTap}>
+              edit
+            </MenuItem>
+            <MenuItem icon={<DeleteIcon />} onClick={deleteButtonTap}>
               delete
             </MenuItem>
           </MenuList>
         </Menu>
       </Flex>
-      <Text color="gray.500" fontSize="md" mb="2">
-        {updatedTime}
-      </Text>
       <Text fontSize="md">{content}</Text>
     </Box>
   );
